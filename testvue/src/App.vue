@@ -59,9 +59,9 @@ const requestData = async (value: string) => {
         base_domain: store.data!.base_domain,
       }
     );
-    console.log(response);
     let data: ArrayAmo = response.data;
     data.name = tempHelpObj!.currentName;
+    console.log(data);
     store.arrayAmo?.push(data);
     console.log(store.arrayAmo);
   } catch (e) {
@@ -81,8 +81,9 @@ onBeforeMount(async () => {
     <div class="max-w-[1920px] flex flex-col items-center justify-start">
       <div class="flex flex-row items-center justify-center gap-20 w-full">
         <select
+          :disabled="isLoading"
           v-model="currentValue"
-          class="h-[40px] w-[220px] outline-none border-2 border-[#000000] rounded-xl p-1"
+          class="h-[40px] w-[220px] outline-none border-2 border-[#000000] rounded-xl p-1 disabled:opacity-50 transition-all"
           name=""
           id=""
         >
@@ -103,16 +104,26 @@ onBeforeMount(async () => {
           <div v-else class="loader"></div>
         </button>
       </div>
-      <div
+      <table
         v-if="store.arrayAmo"
-        class="w-full flex flex-col gap-2 items-start justify-start"
+        class="w-full max-w-[900px] text-center table-fixed mt-10"
       >
-        <Component
-          v-for="(entity, index) in arrayEnities"
-          :key="index"
-          :comp-object="entity"
-        />
-      </div>
+        <thead class="w-full">
+          <tr class="w-full text-xl">
+            <th>Индекс</th>
+            <th>Id</th>
+            <th>Название</th>
+          </tr>
+        </thead>
+        <tbody v-auto-animate class="w-full">
+          <Component
+            v-for="(entity, index) in arrayEnities"
+            :key="index"
+            :comp-object="entity"
+            :index="index"
+          />
+        </tbody>
+      </table>
     </div>
   </div>
 </template>

@@ -4,14 +4,16 @@ import type { CompObject } from "../types";
 
 const props = defineProps<{
   compObject: CompObject;
+  index: number;
 }>();
 </script>
 
 <template>
-  <div class="flex flex-row justify-between w-full">
-    <p>{{ props.compObject.id }}</p>
-    <p>{{ props.compObject.name }}</p>
-  </div>
+  <tr class="w-full">
+    <td>{{ props.index + 1 }}.</td>
+    <td>{{ props.compObject.id }}</td>
+    <td>{{ props.compObject.name }}</td>
+  </tr>
 </template>
 
 <style scoped></style>
